@@ -27,7 +27,25 @@ Resources:
         Ref: InternetGateway
       VpcId: 
         Ref: VPC  
-        
+  NatGateway:
+    Type: "AWS::EC2::NatGateway"
+    DependsOn: NatPublicIP
+    Properties:
+      AllocationId: !GetAtt NatPublicIP.AllocationId
+      SubnetId: !Ref PublicSubnet1
+  NatGateway:
+    Type: "AWS::EC2::NatGateway"
+    DependsOn: NatPublicIP
+    Properties:
+      AllocationId: !GetAtt NatPublicIP.AllocationId
+      SubnetId: !Ref PublicSubnet2
+
+  NatPublicIP:
+    Type: "AWS::EC2::EIP"
+    DependsOn: VPC
+    Properties:
+      Domain: VPC
+      
   PublicSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
@@ -162,12 +180,12 @@ Outputs:
     Export:
       Name: "subPrivada1"
   red4VPC:
-    Description: "el nombre de la segunda subnet publica"
+    Description: "el nombre de la segunda subnet privada"
     Value: !Ref PrivateSubnet2
     Export:
       Name: "subPrivada2"
   puertaEnlaceVPC:
-    Description: "el nombre de la segunda subnet publica"
+    Description: "el gateway de salida a internet"
     Value: !Ref InternetGateway
     Export:
       Name: "puertaSalida"
