@@ -31,13 +31,13 @@ Resources:
     Type: "AWS::EC2::NatGateway"
     DependsOn: NatIP
     Properties:
-      AllocationId: !GetAtt NatPublicIP.AllocationId
+      AllocationId: !GetAtt NatIP.AllocationId
       SubnetId: !Ref PublicSubnet1
   NatGateway2:
     Type: "AWS::EC2::NatGateway"
     DependsOn: NatIP
     Properties:
-      AllocationId: !GetAtt NatPublicIP.AllocationId
+      AllocationId: !GetAtt NatIP.AllocationId
       SubnetId: !Ref PublicSubnet2
 
   NatIP:
