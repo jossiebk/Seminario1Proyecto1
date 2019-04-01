@@ -27,7 +27,26 @@ Resources:
         Ref: InternetGateway
       VpcId: 
         Ref: VPC  
-        
+      
+    NatGateway1:
+    Type: "AWS::EC2::NatGateway"
+    DependsOn: NatIP
+    Properties:
+      AllocationId: !GetAtt NatPublicIP.AllocationId
+      SubnetId: !Ref PublicSubnet1
+  NatGateway2:
+    Type: "AWS::EC2::NatGateway"
+    DependsOn: NatIP
+    Properties:
+      AllocationId: !GetAtt NatPublicIP.AllocationId
+      SubnetId: !Ref PublicSubnet2
+
+  NatIP:
+    Type: "AWS::EC2::EIP"
+    DependsOn: VPC
+    Properties:
+      Domain: VPC
+      
   PublicSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
